@@ -1,6 +1,19 @@
 import doctest
+import time
+import random as ran
 
 
+def time_count(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        res = func(*args, **kwargs)
+        end = time.time()
+        print(f"{func.__name__} time: {(end - start) * 1000} ms")
+        return res
+
+    return wrapper
+
+@time_count
 def select_sort(array):
     """
     Сортировка выбором
@@ -17,6 +30,7 @@ def select_sort(array):
                 min_num = j
         array[index], array[min_num] = array[min_num], array[index]
     return array
+
 
 def heapify(arr, n, i):
     """
@@ -36,10 +50,12 @@ def heapify(arr, n, i):
         arr[i], arr[largest] = arr[largest], arr[i]
         heapify(arr, n, largest)
 
-def HeapSort(arr):
+
+@time_count
+def heapSort(arr):
     """
     Пирамидальная сортировка
-    >>> HeapSort([64, 34, 25, 12, 22, 11, 90])
+    >>> heapSort([64, 34, 25, 12, 22, 11, 90])
     [11, 12, 22, 25, 34, 64, 90]
     """
     n = len(arr)
@@ -53,5 +69,11 @@ def HeapSort(arr):
 
     return arr
 
+
 if __name__ == "__main__":
-    doctest.testmod()
+    size_array = [100, 1000, 10000, 10 ** 5, 10 ** 6]
+    for size in size_array:
+        random_array = [ran.randint(1, 20000) for _ in range(size)]
+        print(f"size_array = {size}")
+        select_sort(random_array)
+        heapSort(random_array)
