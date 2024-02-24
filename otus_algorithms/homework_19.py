@@ -28,12 +28,12 @@ def demucron_algorithm(A):
             vertex = queue.pop(0)
             level.append(vertex)
 
-            for neighbor in A[vertex]:
+            for item in A[vertex]:
                 in_degree[
-                    neighbor] -= 1
-                if in_degree[neighbor] == 0:
+                    item] -= 1
+                if in_degree[item] == 0:
                     queue.append(
-                        neighbor)
+                        item)
 
         result.append(level)
     return result
